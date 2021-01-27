@@ -12,6 +12,7 @@ import GitHubCorner from '../src/components/GitHubCorner';
   background-position: center;
 `;
  */
+// Verificar
 
 export const QuizContainer = styled.div`
   width:100%;
