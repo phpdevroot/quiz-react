@@ -9,6 +9,8 @@ import QuizLogo from '../src/components/QuizLogo';
 import QuizBackground from '../src/components/QuizBackground';
 import Footer from '../src/components/Footer';
 import GitHubCorner from '../src/components/GitHubCorner';
+import Input from '../src/components/Input';
+import Button from '../src/components/Button';
 
 /* const BackgroundImage = styled.div`
   background-image: url(${db.bg});
@@ -19,7 +21,7 @@ import GitHubCorner from '../src/components/GitHubCorner';
  */
 // Verificar
 
-export const QuizContainer = styled.div`
+const QuizContainer = styled.div`
   width:100%;
   max-width: 350px;
   padding-top: 45px;
@@ -61,23 +63,17 @@ export default function Home() {
             }}
             >
 
-              <input
-                onChange={function (infosDoEvento) {
-                  console.log('Campo sendo preenchido', infosDoEvento.target.value);
-                  // State
-                  // name = infosDoEvento.target.value;
-                  setName(infosDoEvento.target.value);
-                }}
-                placeholder="Seu Nome???"
+              <Input
+                name="nomeDoUsuario"
+                onChange={(infosDoEvento) => setName(infosDoEvento.target.value)}
+                placeholder = "Seu Nome???"
+                value={name}
               />
 
-              <button type="submit" disabled={name.length === 0}>
-                Bora Jogar
-                {name}
-              </button>
-
+              <Button type="submit" disabled={name.length === 0}>
+                {`Jogar ${name}`}
+              </Button>
             </form>
-
           </Widget.Content>
         </Widget>
 
