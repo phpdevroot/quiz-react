@@ -1,6 +1,5 @@
 /* eslint-disable linebreak-style */
 
-
 import styled from 'styled-components';
 
 const AlternativesForm = styled.form`
