@@ -6,7 +6,7 @@
     "description": "Teste os seus conhecimentos sobre CSS e vamos ver quantos layouts você vai deixar de quebrar",
     "questions": [
       {
-        "image": "https://media.giphy.com/media/xUOxf3yDKCuwpOlT3i/giphy.gif",
+        "image": "https://media.giphy.com/media/6hM6w8fVK2tcQ/giphy.gif",
         "title": "Como fazer um seletor por id via CSS?",
         "description": "Essa é pra aquecer",
         "answer": 2,

@@ -10,9 +10,12 @@ import Button from '../src/components/Button';
 
 function LoadingWidget() {
   return (
+  /*  <div>
+      Página de quiz
+    </div> */
     <Widget>
       <Widget.Header>
-        Loading...
+        Carregando...
       </Widget.Header>
 
       <Widget.Content>
@@ -22,21 +25,19 @@ function LoadingWidget() {
   );
 }
 
-function QuestionWidget({ 
+function QuestionWidget({
   question,
   questionIndex,
   totalQuestions,
+  onSubmit,
 }) {
+  const questionId = `question__${questionIndex}`;
   return (
-
     <Widget>
       <Widget.Header>
-        {/* BackLinkArrow href="/" /> */}
+        {/* <BackLinkArrow href="/" /> */}
         <h3>
-          Pergunta
-          1
-          de
-          {` ${totalQuestions}`}
+          {`Pergunta ${questionIndex + 1} de ${totalQuestions}`}
         </h3>
       </Widget.Header>
 
@@ -50,33 +51,98 @@ function QuestionWidget({
         src={question.image}
       />
       <Widget.Content>
-        <h2>{question.title}</h2>
-        <p>{question.description}</p>
+        <h2>
+          {question.title}
+        </h2>
+        <p>
+          {question.description}
+        </p>
 
-        <Button>Confirmar</Button>
+        <form
+          onSubmit={(infosDoEvento) => {
+            infosDoEvento.preventDefault();
+            onSubmit();
+          }}
+        >
+          {question.alternatives.map((alternative, alternativeIndex) => {
+            const alternativeId = `alternative__${alternativeIndex}`;
+            return (
+              <Widget.Topic
+                as="label"
+                htmlFor={alternativeId}
+              >
+                <input
+                  // style={{ display: 'none' }}
+                  id={alternativeId}
+                  name={questionId}
+                  type="radio"
+                />
+                {alternative}
+              </Widget.Topic>
+            );
+          })}
+
+          {/* <pre>
+            {JSON.stringify(question, null, 4)}
+          </pre> */}
+          <Button type="submit">
+            Confirmar
+          </Button>
+        </form>
       </Widget.Content>
     </Widget>
-
   );
 }
 
+const screenStates = {
+  QUIZ: 'QUIZ',
+  LOADING: 'LOADING',
+  RESULT: 'RESULT',
+};
 export default function QuizPage() {
-  console.log('perguntas criadas', db.questions);
+  const [screenState, setScreenState] = React.useState(screenStates.LOADING);
   const totalQuestions = db.questions.length;
-  const questionIndex = 0;
+  const [currentQuestion, setCurrentQuestion] = React.useState(0);
+  const questionIndex = currentQuestion;
   const question = db.questions[questionIndex];
+
+  // [React chama de: Efeitos || Effects]
+  // React.useEffect
+  // atualizado === willUpdate
+  // morre === willUnmount
+  React.useEffect(() => {
+    // fetch() ...
+    setTimeout(() => {
+      setScreenState(screenStates.QUIZ);
+    }, 1 * 1000);
+  // nasce === didMount
+  }, []);
+
+  function handleSubmitQuiz() {
+    const nextQuestion = questionIndex + 1;
+    if (nextQuestion < totalQuestions) {
+      setCurrentQuestion(nextQuestion);
+    } else {
+      setScreenState(screenStates.RESULT);
+    }
+  }
 
   return (
     <QuizBackground backgroundImage={db.bg}>
       <QuizContainer>
         <QuizLogo />
-        
-        <QuestionWidget
-        question={question} 
-        questionIndex={questionIndex}
-        totalQuestions={totalQuestions}
-        />
+        {screenState === screenStates.QUIZ && (
+          <QuestionWidget
+            question={question}
+            questionIndex={questionIndex}
+            totalQuestions={totalQuestions}
+            onSubmit={handleSubmitQuiz}
+          />
+        )}
 
+        {screenState === screenStates.LOADING && <LoadingWidget />}
+
+        {screenState === screenStates.RESULT && <div>Você acertou X questões, parabéns!</div>}
       </QuizContainer>
     </QuizBackground>
   );
