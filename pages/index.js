@@ -11,7 +11,9 @@ import QuizLogo from '../src/components/QuizLogo';
 import QuizBackground from '../src/components/QuizBackground';
 import Footer from '../src/components/Footer';
 import GitHubCorner from '../src/components/GitHubCorner';
-import Input from '../src/components/Input';
+// buscando imput de uma nova pasta
+//import Input from '../src/components/Input';
+import NewInput from '../src/components/NewInput';
 import Button from '../src/components/Button';
 
 // const BackgroundImage = styled.div`
@@ -67,7 +69,7 @@ export default function Home() {
               console.log('Fazendo uma submissão por meio do react');
             }}
             >
-              <Input
+              <NewInput
                 name="nomeDoUsuario"
                 onChange={(infosDoEvento) => setName(infosDoEvento.target.value)}
                 placeholder="Diz ai seu nome"
